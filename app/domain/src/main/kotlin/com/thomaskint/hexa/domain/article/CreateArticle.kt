@@ -6,14 +6,14 @@ import com.thomaskint.hexa.domain.trace.SaveTrace
 import com.thomaskint.hexa.domain.user.UserId
 
 class CreateArticle(
-    private val port: com.thomaskint.hexa.domain.article.ArticlePort,
+    private val port: ArticlePort,
     private val saveTrace: SaveTrace,
 ) {
-    operator fun invoke(input: com.thomaskint.hexa.domain.article.ArticleInput): Answer<com.thomaskint.hexa.domain.article.Article> = Answer {
+    operator fun invoke(input: ArticleInput): Answer<Article> = Answer {
         input.validate().throwIt()
 
-        val article = com.thomaskint.hexa.domain.article.Article(
-            id = com.thomaskint.hexa.domain.article.ArticleId.Companion.next(),
+        val article = Article(
+            id = ArticleId.next(),
             label = input.label,
         )
 

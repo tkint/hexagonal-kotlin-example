@@ -7,10 +7,10 @@ import com.thomaskint.hexa.domain.trace.SaveTrace
 import com.thomaskint.hexa.domain.user.UserId
 
 class UpdateArticle(
-    private val port: com.thomaskint.hexa.domain.article.ArticlePort,
+    private val port: ArticlePort,
     private val saveTrace: SaveTrace,
 ) {
-    operator fun invoke(id: com.thomaskint.hexa.domain.article.ArticleId, input: com.thomaskint.hexa.domain.article.ArticleInput): Answer<com.thomaskint.hexa.domain.article.Article> = Answer {
+    operator fun invoke(id: ArticleId, input: ArticleInput): Answer<Article> = Answer {
         val oldArticle = port.getOne(id)
             ?: throw AppError.NotFound("Article `$id` not found").exception
 

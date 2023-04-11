@@ -8,19 +8,19 @@ import java.util.*
 @JvmInline
 value class ArticleId private constructor(val value: UUID) {
     companion object {
-        fun next(): com.thomaskint.hexa.domain.article.ArticleId =
-            com.thomaskint.hexa.domain.article.ArticleId(UUID.randomUUID())
+        fun next(): ArticleId =
+            ArticleId(UUID.randomUUID())
 
-        fun valueOf(value: UUID): com.thomaskint.hexa.domain.article.ArticleId =
-            com.thomaskint.hexa.domain.article.ArticleId(value)
+        fun valueOf(value: UUID): ArticleId =
+            ArticleId(value)
     }
 
     override fun toString(): String = value.toString()
 }
 
 data class Article(
-    val id: com.thomaskint.hexa.domain.article.ArticleId,
-    val label: String
+    val id: ArticleId,
+    val label: String,
 )
 
 data class ArticleInput(
@@ -28,12 +28,12 @@ data class ArticleInput(
 ) {
     companion object {
         val validator = Validation {
-            com.thomaskint.hexa.domain.article.ArticleInput::label {
+            ArticleInput::label {
                 minLength(1) hint "The label must not be empty"
             }
         }
     }
 
-    fun validate(): ValidationResult<com.thomaskint.hexa.domain.article.ArticleInput> =
-        com.thomaskint.hexa.domain.article.ArticleInput.Companion.validator(this)
+    fun validate(): ValidationResult<ArticleInput> =
+        validator(this)
 }
