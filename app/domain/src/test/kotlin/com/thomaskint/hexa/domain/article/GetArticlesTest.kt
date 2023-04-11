@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test
 
 class GetArticlesTest {
     private val articlePort = InMemoryArticleAdapter()
-    private val getArticles = com.thomaskint.hexa.domain.article.GetArticles(articlePort)
+    private val getArticles = GetArticles(articlePort)
 
     private val articles = (1..5).map { index ->
-        com.thomaskint.hexa.domain.article.Article(
-            id = com.thomaskint.hexa.domain.article.ArticleId.next(),
+        Article(
+            id = ArticleId.next(),
             label = "Label article $index"
         )
     }

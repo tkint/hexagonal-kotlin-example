@@ -3,38 +3,38 @@ package com.thomaskint.hexa.domain.article
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class InMemoryArticleAdapter : com.thomaskint.hexa.domain.article.ArticlePort {
-    private val data: MutableMap<com.thomaskint.hexa.domain.article.ArticleId, com.thomaskint.hexa.domain.article.Article> = mutableMapOf()
+class InMemoryArticleAdapter : ArticlePort {
+    private val data: MutableMap<ArticleId, Article> = mutableMapOf()
 
-    override fun getOne(id: com.thomaskint.hexa.domain.article.ArticleId): com.thomaskint.hexa.domain.article.Article? = data[id]
+    override fun getOne(id: ArticleId): Article? = data[id]
 
-    override fun getAll(): List<com.thomaskint.hexa.domain.article.Article> = data.values.toList()
+    override fun getAll(): List<Article> = data.values.toList()
 
-    override fun save(article: com.thomaskint.hexa.domain.article.Article) {
+    override fun save(article: Article) {
         data[article.id] = article
     }
 }
 
-infix fun InMemoryArticleAdapter.assumeArticleExists(article: com.thomaskint.hexa.domain.article.Article) {
+infix fun InMemoryArticleAdapter.assumeArticleExists(article: Article) {
     save(article)
 }
 
-infix fun InMemoryArticleAdapter.assumeArticlesExists(articles: Collection<com.thomaskint.hexa.domain.article.Article>) {
+infix fun InMemoryArticleAdapter.assumeArticlesExists(articles: Collection<Article>) {
     articles.forEach { save(it) }
 }
 
 abstract class ArticlePortContract {
-    abstract val port: com.thomaskint.hexa.domain.article.ArticlePort
+    abstract val port: ArticlePort
 
     @Test
     fun `test contract`() {
         port.getAll() shouldBe emptyList()
 
-        val articleId = com.thomaskint.hexa.domain.article.ArticleId.next()
+        val articleId = ArticleId.next()
 
         port.getOne(articleId) shouldBe null
 
-        val article = com.thomaskint.hexa.domain.article.Article(
+        val article = Article(
             id = articleId,
             label = "Label article",
         )
@@ -45,12 +45,12 @@ abstract class ArticlePortContract {
 
         port.getOne(articleId) shouldBe article
 
-        val unknownId = com.thomaskint.hexa.domain.article.ArticleId.next()
+        val unknownId = ArticleId.next()
 
         port.getOne(unknownId) shouldBe null
     }
 }
 
 class InMemoryArticleAdapterTest : ArticlePortContract() {
-    override val port: com.thomaskint.hexa.domain.article.ArticlePort = InMemoryArticleAdapter()
+    override val port: ArticlePort = InMemoryArticleAdapter()
 }

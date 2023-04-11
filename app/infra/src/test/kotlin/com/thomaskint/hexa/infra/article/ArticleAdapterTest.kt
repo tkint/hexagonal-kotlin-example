@@ -8,5 +8,5 @@ class ArticleAdapterTest : ArticlePortContract() {
     private val testDatabase = TestDatabase()
     private val repository = ArticleRepository(testDatabase.database)
 
-    override val port: com.thomaskint.hexa.domain.article.ArticlePort = ArticleAdapter(repository)
+    override val port: ArticlePort = ArticleAdapter(repository)
 }

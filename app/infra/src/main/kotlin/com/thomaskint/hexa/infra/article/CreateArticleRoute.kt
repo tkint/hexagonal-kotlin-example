@@ -12,7 +12,7 @@ import org.http4k.contract.meta
 import org.http4k.core.*
 
 class CreateArticleRoute(
-    private val createArticle: com.thomaskint.hexa.domain.article.CreateArticle,
+    private val createArticle: CreateArticle,
 ) : RouteWithContract {
     private val path = "article"
     private val method = Method.POST

@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test
 
 class GetArticleTest {
     private val articlePort = InMemoryArticleAdapter()
-    private val getArticle = com.thomaskint.hexa.domain.article.GetArticle(articlePort)
+    private val getArticle = GetArticle(articlePort)
 
-    private val article = com.thomaskint.hexa.domain.article.Article(
-        id = com.thomaskint.hexa.domain.article.ArticleId.next(),
+    private val article = Article(
+        id = ArticleId.next(),
         label = "Label article"
     )
 
@@ -25,7 +25,7 @@ class GetArticleTest {
 
     @Test
     fun `returns failure when not found`() {
-        val articleId = com.thomaskint.hexa.domain.article.ArticleId.next()
+        val articleId = ArticleId.next()
         getArticle(articleId) shouldBeFailure AppError.NotFound("Article `$articleId` not found")
     }
 }
